@@ -61,9 +61,7 @@ const Navbar = () => {
             <FaPills className="inline-block mr-2" /> Pharmacy
           </Link>
         )}
-        <Link to="/charts" className="text-gray-700 hover:text-teal-500">
-          <FaChartBar className="inline-block mr-2" /> Charts
-        </Link>
+
         <Link to="/help" className="text-gray-700 hover:text-teal-500">
           <FaQuestionCircle className="inline-block mr-2" /> Help
         </Link>
