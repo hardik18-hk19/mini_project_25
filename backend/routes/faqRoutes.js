@@ -1,10 +1,12 @@
 const express = require("express");
-const router = express.Router();
-const faqController = require("../controllers/faqControllers");
+const { addFAQ, getFAQs } = require("../controllers/faqController");
 
-// Routes
-router.get("/", faqController.getFAQs);
-router.post("/", faqController.addFAQ);
-router.delete("/:id", faqController.deleteFAQ);
+const router = express.Router();
+
+// Route to add a new FAQ
+router.post("/add", addFAQ);
+
+// Route to get all FAQs
+router.get("/", getFAQs);
 
 module.exports = router;

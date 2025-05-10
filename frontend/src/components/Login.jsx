@@ -1,11 +1,16 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
-  const [formData, setFormData] = useState({ username: "", password: "", role: "doctor" });
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+    role: "doctor",
+  });
   const [user, setUser] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Track if screen is mobile
+  const [faqs, setFaqs] = useState([]);
   const navigate = useNavigate();
 
   // Handle screen resizing for responsiveness
@@ -21,6 +26,21 @@ const Login = () => {
     };
   }, []);
 
+  // Fetch FAQs from the backend
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/faqs");
+        const data = await response.json();
+        setFaqs(data);
+      } catch (error) {
+        console.error("Error fetching FAQs:", error);
+      }
+    };
+
+    fetchFaqs();
+  }, []);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -28,10 +48,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("http://localhost:5000/auth/login", formData);
+      const { data } = await axios.post(
+        "http://localhost:5000/auth/login",
+        formData
+      );
 
       if (data.user) {
-        localStorage.setItem("user", JSON.stringify(data.user)); 
+        localStorage.setItem("user", JSON.stringify(data.user));
         setUser(data.user);
         navigate("/");
         window.location.reload();
@@ -39,7 +62,7 @@ const Login = () => {
         alert("Invalid credentials");
       }
     } catch (error) {
-      alert("Invalid credentials");
+      alert("Invalid credentials", error);
     }
   };
 
@@ -164,9 +187,19 @@ const Login = () => {
           </>
         )}
       </div>
+
+      {/* FAQ Section */}
+      <div className="mt-8 w-full max-w-2xl">
+        <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+        {faqs.map((faq, index) => (
+          <div key={index} className="mb-4">
+            <h3 className="font-bold">{faq.question}</h3>
+            <p>{faq.answer}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
 export default Login;
-
