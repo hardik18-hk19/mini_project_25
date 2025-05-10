@@ -15,7 +15,8 @@ const ADMIN_CREDENTIALS = {
 // Signup Route (Only for Doctors & Patients)
 router.post("/signup", async (req, res) => {
   const { username, email, password, role } = req.body;
-  if (role === "admin") return res.status(403).json({ message: "Cannot register as admin" });
+  if (role === "admin")
+    return res.status(403).json({ message: "Cannot register as admin" });
 
   try {
     const user = new User({ username, email, role });
@@ -31,12 +32,18 @@ router.post("/login", (req, res, next) => {
   const { username, password, role } = req.body;
 
   console.log("Received login request:", username, password, role);
-  console.log("ENV Admin:", process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD, process.env.ADMIN_ID);
+  console.log(
+    "ENV Admin:",
+    process.env.ADMIN_USERNAME,
+    process.env.ADMIN_PASSWORD,
+    process.env.ADMIN_ID
+  );
 
+  // Corrected condition for admin login
   if (
     username === process.env.ADMIN_USERNAME &&
     password === process.env.ADMIN_PASSWORD &&
-    role === "doctor"
+    role === "admin" // ✅ Check for "admin" role
   ) {
     const adminUser = {
       id: process.env.ADMIN_ID, // Taking ID from .env
@@ -52,7 +59,8 @@ router.post("/login", (req, res, next) => {
   } else {
     passport.authenticate("local", (err, user, info) => {
       if (err) return res.status(500).json({ error: err.message });
-      if (!user) return res.status(401).json({ error: "Invalid username or password" });
+      if (!user)
+        return res.status(401).json({ error: "Invalid username or password" });
 
       if (user.role !== role) {
         return res.status(403).json({ error: "Role mismatch" });
@@ -66,13 +74,12 @@ router.post("/login", (req, res, next) => {
   }
 });
 
-
+// Logout Route
 router.get("/logout", (req, res) => {
   req.logout(() => {
     res.clearCookie("connect.sid"); // Clear session cookie (if using sessions)
     res.json({ message: "Logged out successfully" });
   });
 });
-
 
 module.exports = router;

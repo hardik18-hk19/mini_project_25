@@ -39,7 +39,9 @@ const Login = () => {
       );
 
       if (data.user) {
-        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.token); // Save token
+        localStorage.setItem("role", data.user.role); // Save role
+        localStorage.setItem("user", JSON.stringify(data.user)); // Save full user object
         setUser(data.user);
         navigate("/");
         window.location.reload();

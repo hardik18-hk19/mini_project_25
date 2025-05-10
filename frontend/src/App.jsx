@@ -34,7 +34,7 @@ function App() {
         element={
           <ProtectedRoute
             allowedRoles={["doctor", "admin"]}
-            alertMessage="You are not a doctor, so you can't access this page."
+            alertMessage="You are not authorized to access this page."
           />
         }
       >
@@ -46,7 +46,7 @@ function App() {
         element={
           <ProtectedRoute
             allowedRoles={["patient", "admin"]}
-            alertMessage="You are not a patient, so you can't book an appointment."
+            alertMessage="You are not authorized to access this page."
           />
         }
       >
