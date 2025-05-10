@@ -1,10 +1,11 @@
 const express = require("express");
+const { verifyAdmin } = require("../middleware/authMiddleware");
 const { addMedicine } = require("../controllers/medicineController");
 const router = express.Router();
 const Medicine = require("../models/Medicine.js");
 
 // Add Medicine
-router.post("/add", addMedicine);
+router.post("/add", verifyAdmin, addMedicine);
 
 // Get All Medicines
 router.get("/", async (req, res) => {

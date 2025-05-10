@@ -47,54 +47,67 @@ const LandingPage = () => {
   return (
     <>
       <Navbar />
-      <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-r from-[#17C3B2] to-[#FF6B6B] text-white">
-        <h1 className="text-5xl font-extrabold mb-6 text-center drop-shadow-lg">
-          Welcome to the Hospital Management System
-        </h1>
-        <p className="text-xl mb-8 text-center max-w-3xl drop-shadow-md">
-          A modern solution to streamline hospital operations, manage patient
-          records, and enhance healthcare services with ease.
-        </p>
-        <div className="flex gap-6">
-          <Link
-            to="/login"
-            className="px-8 py-3 bg-white text-[#17C3B2] font-bold rounded-full shadow-lg hover:bg-gray-100 transition-all"
-          >
-            Login
-          </Link>
-          <Link
-            to="/signup"
-            className="px-8 py-3 bg-white text-[#FF6B6B] font-bold rounded-full shadow-lg hover:bg-gray-100 transition-all"
-          >
-            Sign Up
-          </Link>
+      <div className="h-screen flex flex-col items-center justify-start bg-gradient-to-br from-[#17C3B2] to-[#FF6B6B] text-white">
+        {/* Title Section */}
+        <div className="w-full text-center pt-30 pb-15 bg-[#003366]">
+          <h1 className="text-5xl font-extrabold text-white drop-shadow-lg">
+            Hospital Management System
+          </h1>
+          <p className="text-lg mt-4 text-gray-300">
+            Simplifying healthcare operations for better patient care.
+          </p>
+        </div>
+
+        {/* Hero Section */}
+        <div className="text-center max-w-4xl mt-10">
+          <h2 className="text-4xl font-bold mb-6 drop-shadow-lg">
+            Welcome to the Hospital Management System
+          </h2>
+          <p className="text-lg mb-8 drop-shadow-md">
+            A modern solution to streamline hospital operations, manage patient
+            records, and enhance healthcare services with ease.
+          </p>
+          <div className="flex justify-center gap-6">
+            <Link
+              to="/login"
+              className="px-8 py-3 bg-white text-[#17C3B2] font-bold rounded-full shadow-lg hover:bg-gray-100 transition-all"
+            >
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              className="px-8 py-3 bg-white text-[#FF6B6B] font-bold rounded-full shadow-lg hover:bg-gray-100 transition-all"
+            >
+              Sign Up
+            </Link>
+          </div>
         </div>
 
         {/* Features Section */}
         <div className="mt-16 w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <FaUserMd className="text-4xl text-[#17C3B2] mx-auto mb-4" />
+            <FaUserMd className="text-5xl text-[#17C3B2] mx-auto mb-4" />
             <h3 className="text-xl font-bold mb-2">Patient Management</h3>
             <p className="text-gray-700">
               Effortlessly manage patient records and appointments.
             </p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <FaPills className="text-4xl text-[#FF6B6B] mx-auto mb-4" />
+            <FaPills className="text-5xl text-[#FF6B6B] mx-auto mb-4" />
             <h3 className="text-xl font-bold mb-2">Pharmacy Management</h3>
             <p className="text-gray-700">
               Track and manage inventory and billing.
             </p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <FaCalendarAlt className="text-4xl text-[#17C3B2] mx-auto mb-4" />
+            <FaCalendarAlt className="text-5xl text-[#17C3B2] mx-auto mb-4" />
             <h3 className="text-xl font-bold mb-2">Staff Scheduling</h3>
             <p className="text-gray-700">
               Streamline doctor and staff schedules.
             </p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <FaChartBar className="text-4xl text-[#FF6B6B] mx-auto mb-4" />
+            <FaChartBar className="text-5xl text-[#FF6B6B] mx-auto mb-4" />
             <h3 className="text-xl font-bold mb-2">Analytics</h3>
             <p className="text-gray-700">
               Generate detailed reports for data-driven decision-making.
@@ -115,7 +128,7 @@ const LandingPage = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="p-3 border border-gray-300 rounded-lg"
+              className="p-3 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#17C3B2]"
             />
             <input
               type="email"
@@ -124,7 +137,7 @@ const LandingPage = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="p-3 border border-gray-300 rounded-lg"
+              className="p-3 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#17C3B2]"
             />
             <textarea
               name="message"
@@ -133,7 +146,7 @@ const LandingPage = () => {
               onChange={handleChange}
               required
               rows="4"
-              className="p-3 border border-gray-300 rounded-lg"
+              className="p-3 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#17C3B2]"
             ></textarea>
             <button
               type="submit"
