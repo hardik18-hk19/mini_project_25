@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaBell,
   FaShoppingCart,
@@ -19,6 +19,7 @@ import {
 const Navbar = () => {
   const [user, setUser] = useState(null);
   const [isOpen, setIsOpen] = useState(false); // Sidebar state
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -27,13 +28,20 @@ const Navbar = () => {
     }
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("user"); // Clear user data from localStorage
+    navigate("/login"); // Redirect to login page
+  };
+
   return (
     <div className="fixed top-0 w-full bg-white shadow-md p-4 h-16 flex items-center justify-between z-50">
       {/* Logo */}
-      <div className="text-2xl font-bold flex items-center">
-        <span className="text-teal-500">You</span>
-        <span className="text-gray-800">Medi</span>
-      </div>
+      <Link to="/">
+        <div className="text-2xl font-bold flex items-center">
+          <span className="text-teal-500">You</span>
+          <span className="text-gray-800">Medi</span>
+        </div>
+      </Link>
 
       {/* ✅ Search Bar (Hidden on Small Screens) */}
       <div className="relative w-1/3 hidden md:block">
@@ -193,10 +201,7 @@ const Navbar = () => {
 
             {/* Logout */}
             <button
-              onClick={() => {
-                localStorage.removeItem("user");
-                window.location.href = "/login";
-              }}
+              onClick={handleLogout}
               className="flex items-center gap-x-2 text-red-500 hover:text-red-600"
             >
               <FaSignOutAlt className="w-5 h-5" />

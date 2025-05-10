@@ -15,6 +15,7 @@ const medicineRoutes = require("./routes/medicineRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const faqRoutes = require("./routes/faqRoutes");
 const chartRoutes = require("./routes/chartRoutes"); // ✅ Added Chart API Route
+const contactRoutes = require("./routes/contactRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -76,5 +77,7 @@ app.use("/api/medicines", medicineRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/faqs", faqRoutes);
 app.use("/api/charts", chartRoutes); // ✅ Added Chart API
+app.use("/api/contact", contactRoutes);
 
+// Start the server
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

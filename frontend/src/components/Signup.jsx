@@ -1,13 +1,13 @@
-import { useState } from "react";
-import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
-    role: "doctor",
+    role: "patient",
   });
 
   const navigate = useNavigate();
@@ -19,114 +19,145 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/auth/signup", formData);
-      navigate("/login");
+      const response = await fetch("http://localhost:5000/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert("Signup successful! Please log in.");
+        navigate("/login");
+      } else {
+        alert("Signup failed. Please try again.");
+      }
     } catch (error) {
-      alert(error.response.data.error);
+      console.error("Error during signup:", error);
+      alert("An error occurred. Please try again.");
     }
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      background: "#17C3B2"
-      }}
-    >
+    <>
+      <Navbar />
       <div
         style={{
-          background: "#fff",
-          padding: "40px",
-          borderRadius: "10px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-          width: "480px",
-          textAlign: "center",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(100vh - 60px)", // Adjust height to account for the navbar
+          background: "#17C3B2",
         }}
       >
-        <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "16px", color: "#003366" }}>
-          Sign Up
-        </h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "400px",
+            background: "#fff",
+            borderRadius: "15px",
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+            border: "3px solid #17C3B2",
+            padding: "40px",
+          }}
+        >
+          <h2
             style={{
-              width: "100%",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-              marginBottom: "10px",
-            }}
-            onChange={handleChange}
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-              marginBottom: "10px",
-            }}
-            onChange={handleChange}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-              marginBottom: "10px",
-            }}
-            onChange={handleChange}
-          />
-          <select
-            name="role"
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-              marginBottom: "10px",
-            }}
-            onChange={handleChange}
-          >
-            <option value="doctor">Doctor</option>
-            <option value="patient">Patient</option>
-          </select>
-          <button
-            type="submit"
-            style={{
-              width: "100%",
-              background: "#17C3B2", 
-              color: "#fff",
-              padding: "10px",
-              borderRadius: "5px",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "16px",
+              fontSize: "24px",
+              fontWeight: "bold",
+              marginBottom: "20px",
+              textAlign: "center",
             }}
           >
-            Sign Up
-          </button>
-        </form>
-        <p style={{ marginTop: "16px", fontSize: "14px" }}>
-          Already have an account?{" "}
-          <Link to="/login" style={{ color: "#003366", fontWeight: "bold", textDecoration: "none" }}>
-            Login
-          </Link>
-        </p>
+            Signup
+          </h2>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              style={{
+                width: "100%",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                marginBottom: "10px",
+              }}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              style={{
+                width: "100%",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                marginBottom: "10px",
+              }}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              style={{
+                width: "100%",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                marginBottom: "10px",
+              }}
+              onChange={handleChange}
+              required
+            />
+            <select
+              name="role"
+              style={{
+                width: "100%",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                marginBottom: "10px",
+              }}
+              onChange={handleChange}
+            >
+              <option value="patient">Patient</option>
+              <option value="doctor">Doctor</option>
+              <option value="admin">Admin</option>
+            </select>
+            <button
+              type="submit"
+              style={{
+                width: "100%",
+                background: "#17C3B2",
+                color: "#fff",
+                padding: "10px",
+                borderRadius: "5px",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              Signup
+            </button>
+          </form>
+          <div style={{ marginTop: "10px", textAlign: "center" }}>
+            <span>Already have an account? </span>
+            <Link
+              to="/login"
+              style={{ color: "#003366", textDecoration: "underline" }}
+            >
+              Login
+            </Link>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

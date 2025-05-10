@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import Navbar from "./Navbar";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +11,6 @@ const Login = () => {
   });
   const [user, setUser] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Track if screen is mobile
-  const [faqs, setFaqs] = useState([]);
   const navigate = useNavigate();
 
   // Handle screen resizing for responsiveness
@@ -24,21 +24,6 @@ const Login = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
-
-  // Fetch FAQs from the backend
-  useEffect(() => {
-    const fetchFaqs = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/faqs");
-        const data = await response.json();
-        setFaqs(data);
-      } catch (error) {
-        console.error("Error fetching FAQs:", error);
-      }
-    };
-
-    fetchFaqs();
   }, []);
 
   const handleChange = (e) => {
@@ -67,138 +52,130 @@ const Login = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        background: "#17C3B2",
-        padding: isMobile ? "20px" : "0", // Add padding on smaller screens
-      }}
-    >
+    <>
+      <Navbar />
       <div
         style={{
           display: "flex",
-          flexDirection: "column", // Stack elements vertically
-          width: isMobile ? "90%" : "400px", // Fixed width for desktop, responsive for mobile
-          background: "#fff",
-          borderRadius: "15px",
-          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-          border: "3px solid #17C3B2",
-          padding: "40px", // Add padding for content
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(100vh - 60px)", // Adjust height to account for the navbar
+          background: "#17C3B2",
+          padding: isMobile ? "20px" : "0", // Add padding on smaller screens
         }}
       >
-        {user ? (
-          <h2
-            style={{
-              fontSize: "24px",
-              fontWeight: "bold",
-              marginBottom: "20px",
-              textAlign: "center",
-            }}
-          >
-            Welcome, {user.username}!
-          </h2>
-        ) : (
-          <>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column", // Stack elements vertically
+            width: isMobile ? "90%" : "400px", // Fixed width for desktop, responsive for mobile
+            background: "#fff",
+            borderRadius: "15px",
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+            border: "3px solid #17C3B2",
+            padding: "40px", // Add padding for content
+          }}
+        >
+          {user ? (
             <h2
               style={{
                 fontSize: "24px",
                 fontWeight: "bold",
                 marginBottom: "20px",
-                textAlign: "center", // Center the heading
+                textAlign: "center",
               }}
             >
-              Login
+              Welcome, {user.username}!
             </h2>
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
+          ) : (
+            <>
+              <h2
                 style={{
-                  width: "100%",
-                  padding: "10px",
-                  border: "1px solid #ccc",
-                  borderRadius: "5px",
-                  marginBottom: "10px",
-                  fontSize: isMobile ? "14px" : "16px", // Adjust font size for smaller screens
-                }}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  border: "1px solid #ccc",
-                  borderRadius: "5px",
-                  marginBottom: "10px",
-                  fontSize: isMobile ? "14px" : "16px",
-                }}
-                onChange={handleChange}
-                required
-              />
-              <select
-                name="role"
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  border: "1px solid #ccc",
-                  borderRadius: "5px",
-                  marginBottom: "10px",
-                  fontSize: isMobile ? "14px" : "16px",
-                }}
-                onChange={handleChange}
-              >
-                <option value="doctor">Doctor</option>
-                <option value="patient">Patient</option>
-                <option value="admin">Admin</option>
-              </select>
-              <button
-                type="submit"
-                style={{
-                  width: "100%",
-                  background: "#17C3B2",
-                  color: "#fff",
-                  padding: "10px",
-                  borderRadius: "5px",
-                  border: "none",
-                  cursor: "pointer",
-                  fontSize: "16px",
+                  fontSize: "24px",
+                  fontWeight: "bold",
+                  marginBottom: "20px",
+                  textAlign: "center", // Center the heading
                 }}
               >
                 Login
-              </button>
-            </form>
-            <div style={{ marginTop: "10px", textAlign: "center" }}>
-              <span>Don't have an account? </span>
-              <Link
-                to="/signup"
-                style={{ color: "#003366", textDecoration: "underline" }}
-              >
-                Sign up
-              </Link>
-            </div>
-          </>
-        )}
+              </h2>
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "5px",
+                    marginBottom: "10px",
+                    fontSize: isMobile ? "14px" : "16px", // Adjust font size for smaller screens
+                  }}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "5px",
+                    marginBottom: "10px",
+                    fontSize: isMobile ? "14px" : "16px",
+                  }}
+                  onChange={handleChange}
+                  required
+                />
+                <select
+                  name="role"
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "5px",
+                    marginBottom: "10px",
+                    fontSize: isMobile ? "14px" : "16px",
+                  }}
+                  onChange={handleChange}
+                >
+                  <option value="doctor">Doctor</option>
+                  <option value="patient">Patient</option>
+                  <option value="admin">Admin</option>
+                </select>
+                <button
+                  type="submit"
+                  style={{
+                    width: "100%",
+                    background: "#17C3B2",
+                    color: "#fff",
+                    padding: "10px",
+                    borderRadius: "5px",
+                    border: "none",
+                    cursor: "pointer",
+                    fontSize: "16px",
+                  }}
+                >
+                  Login
+                </button>
+              </form>
+              <div style={{ marginTop: "10px", textAlign: "center" }}>
+                <span>Don't have an account? </span>
+                <Link
+                  to="/signup"
+                  style={{ color: "#003366", textDecoration: "underline" }}
+                >
+                  Sign up
+                </Link>
+              </div>
+            </>
+          )}
+        </div>
       </div>
-
-      {/* FAQ Section */}
-      <div className="mt-8 w-full max-w-2xl">
-        <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
-        {faqs.map((faq, index) => (
-          <div key={index} className="mb-4">
-            <h3 className="font-bold">{faq.question}</h3>
-            <p>{faq.answer}</p>
-          </div>
-        ))}
-      </div>
-    </div>
+    </>
   );
 };
 
